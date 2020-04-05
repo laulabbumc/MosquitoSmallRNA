@@ -6,7 +6,7 @@ Example for running the script, gene_centric_test:
 $ bash /[YOUR OWN CUSTOM INSTALLATION PATH]/gene-centric.sh AnGam_Fcarc_TN.fastq Angam AGATCGGAAG 20000000 5
 
 Example for running the script, TE_virus_test: 
-$ bash /[YOUR OWN CUSTOM INSTALLATION PATH]/TE_virus_pipeline.sh AnGam_Fcarc_TN ../gene_centric_t est/summary Angam AGATCGGAAG
+$ bash /[YOUR OWN CUSTOM INSTALLATION PATH]/TE_virus_pipeline.sh AnGam_Fcarc_TN ../gene_centric_test/summary Angam AGATCGGAAG
 
 Example for running the script, phasing_test:
 $ bash /[YOUR OWN CUSTOM INSTALLATION PATH]/sRNA_Phasing_pipeline.sh AnGam_Fcarc_TN.fastq Angam AGATCGGAAG
