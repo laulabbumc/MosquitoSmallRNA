@@ -30,8 +30,9 @@ do
    grep '^>' ${a[$i]}.trim.fastq.uq.polyn | sort -u > ${a[$i]}.trim.fastq.uq.polyn.ids.txt
    fgrep -v -f ${a[$i]}.sam.reads.txt ${a[$i]}.trim.fastq.uq.polyn.ids.txt | sed -e 's/>//' > ${a[$i]}.trim.fastq.uq.polyn.filtered.ids  
    cat ${a[$i]}.trim.fastq.uq.polyn.filtered.ids | lt_retrieve ${a[$i]}.trim.fastq.uq.polyn > ${a[$i]}.trim.fastq.uq.polyn.filtered 
-   blat  $DATABASE_PATH/$1\_structure_rna ${a[$i]}.trim.fastq.uq.polyn.filtered -out=blast8 ${a[$i]}.trim.fastq.uq.polyn.filtered.structure_RNA.txt
-   cut -f 1 ${a[$i]}.trim.fastq.uq.polyn.filtered.structure_RNA.txt | sort -u > ${a[$i]}.trim.fastq.uq.polyn.filtered.structure_RNA.ids.txt
+#   blat  $DATABASE_PATH/$1\_structure_rna ${a[$i]}.trim.fastq.uq.polyn.filtered -out=blast8 ${a[$i]}.trim.fastq.uq.polyn.filtered.structure_RNA.txt
+blastall -p blastn -i ${a[$i]}.trim.fastq.uq.polyn.filtered  -d $DATABASE_PATH/$1\_structure_rna  -m 8  -o ${a[$i]}.trim.fastq.uq.polyn.filtered.structure_RNA.txt  -F none -e 0.01 -a 10 -b 100 -v 100 -z 10000000
+awk -F'	' '{ if ($3>94) print $1}'  ${a[$i]}.trim.fastq.uq.polyn.filtered.structure_RNA.txt | sort -u > ${a[$i]}.trim.fastq.uq.polyn.filtered.structure_RNA.ids.txt
    fgrep -v -f ${a[$i]}.trim.fastq.uq.polyn.filtered.structure_RNA.ids.txt  ${a[$i]}.trim.fastq.uq.polyn.filtered.ids | lt_retrieve ${a[$i]}.trim.fastq.uq.polyn > ${a[$i]}.trim.fastq.uq.polyn.filtered 
    mv ${a[$i]}.trim.fastq.uq.polyn.filtered  ${a[$i]}.trim.fastq.uq.polyn
   
