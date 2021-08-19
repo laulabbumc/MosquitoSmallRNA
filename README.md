@@ -4,6 +4,24 @@
 
 The Mosquito Small RNA Genomics (MSRG) resource is a repository of analyses on the small RNA transcriptomes of mosquito cell cultures and somatic and gonadal tissues. This resource allows for comparing the regulation dynamics of small RNAs generated from transposons and viruses across mosquito species. This chapter covers the procedures to set up the MSRG resource pipeline as a new installation by detailing the necessary collection of genome reference and annotation files and lists of microRNAs (miRNAs) hairpin sequences, transposon repeats consensus sequences, and virus genome sequences. Proper execution of the MSRG resource pipeline yields outputs amenable to biologists to further analyze with desktop and spreadsheet software to gain insights into the balance between arthropod endogenous small RNA populations and the proportions of virus-derived small RNAs that include Piwi-interacting RNAs (piRNAs) and endogenous small interfering RNAs (siRNAs).
 
+## Standard Tools Used
+
+THe following software packages are used by the pipeline. We list the version that we used for testing:
+
+- python3/3.8.10
+- cutadapt/3.4
+- bedops/2.4.35
+- perl/5.34.0
+- bedtools/2.27.1
+- bowtie/1.0.0
+- samtools/1.10
+- blast/2.2.26
+- fastx-toolkit/0.0.14
+- R/4.0.5
+- bedtobigbed/2.6
+- ucscutils/2018-11-27
+ 
+
 ## Installation
 
 
