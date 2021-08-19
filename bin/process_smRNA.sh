@@ -1,5 +1,7 @@
 #!/bin/bash
-INSTALLATION_PATH=/projectnb/lau-bumc/qichengm/software/mosquitoSmallRNA/bin
+
+
+INSTALLATION_PATH=$bindir
 infile=$1
 prefix=${1%.fastq*}
 

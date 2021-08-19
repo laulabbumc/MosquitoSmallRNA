@@ -1,8 +1,17 @@
 #!/bin/bash
-INSTALLATION_PATH=/projectnb/lau-bumc/qichengm/software/mosquitoSmallRNA/bin
-DATABASE_PATH=/projectnb/lau-bumc/qichengm/software/mosquitoSmallRNA/database
-#$1  sample
-#$2 organism name, for example $2
+
+
+# $1 sample
+# $2 organism name, for example $2
+# $3 database path
+# $4 flag
+
+echo "Flag=$4"
+
+#katia
+#INSTALLATION_PATH=/projectnb/lau-bumc/gdayama/projects/yamashita_Dmel_github_test/bin
+DATABASE_PATH=$3
+
 # $DATABASE_PATH/repeat_$2  is the repeat database
 plot_window_size=1
 mismatch=2
@@ -12,7 +21,11 @@ mismatch=2
 bowtie -f -v $mismatch -S -k 100000 -m 100000 --strata --best -p 1 $DATABASE_PATH/repeat_$2 $1.trim.fastq.uq.polyn z0.$1
 grep -v '	4	\*	0	0	\*	\*	0	0	' z0.$1 > $1.rep.sam
 rm z0.$1
-python  $INSTALLATION_PATH/extract_sam_by_min_PM_max_NM.py $1.rep.sam 20 2   tmp.sam  # 0  for Wolbachia, 1 for virus and structure RNA, 2 for TE
+
+
+# 0  for Wolbachia, 1 for virus and structure RNA, 2 for TE
+echo "python  $bindir/extract_sam_by_min_PM_max_NM.py $1.rep.sam 20 $4  tmp.sam"
+python  $bindir/extract_sam_by_min_PM_max_NM.py $1.rep.sam 20 $4  tmp.sam  
 mv tmp.sam $1.rep.sam
 
 #grep '^@' z0.$1 > $1.rep.sam

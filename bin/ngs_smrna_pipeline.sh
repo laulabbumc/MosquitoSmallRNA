@@ -1,14 +1,4 @@
-INSTALLATION_PATH=/projectnb/lau-bumc/qichengm/software/mosquitoSmallRNA/bin
-
-
-plot_window_size=100
-
-extend_window=100
-
-mismatch=2
-cutoff=0.1
-
-  
+INSTALLATION_PATH=$bindir
 
 
 bash $INSTALLATION_PATH/ngs_align_to_mirna.sh $1.clipped $2

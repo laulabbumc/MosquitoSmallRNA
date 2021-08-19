@@ -23,6 +23,22 @@ my $count_hash_5prime = {};
 my $count_hash_3prime = {};
 open(my $SAM, "<", $sam_file) 
     or die "unable to open file: $sam_file";
+# there is a bug in the original code 
+# will affect the result - check with Gargi
+
+# sam file head looks like below: 
+# [yshen16@scc-ka3 WT_smRNAseq_PRJNA505691_miRNA]$ head WT_smRNAseq_PRJNA505691.hairpin.sam
+# @HD	VN:1.0	SO:unsorted
+# @SQ	SN:0|28SrRNA:XR_046895	LN:3518
+# @SQ	SN:0|28SrRNA:gi|126041079|gb|EF216297.1|	LN:650
+# @SQ	SN:0|28SrRNA:gi|158263|gb|AH001033.1|SEG_DRORGM10	LN:1411
+# @SQ	SN:0|28SrRNA:gi|158271|gb|K01583.1|DRORGM201	LN:127
+# @SQ	SN:0|28SrRNA:gi|158272|gb|K01584.1|DRORGM202	LN:109
+# @SQ	SN:0|28SrRNA:gi|158273|gb|K01585.1|DRORGM203	LN:229
+# @SQ	SN:0|28SrRNA:gi|158275|gb|K01582.1|DRORGM219	LN:612
+# @SQ	SN:0|28SrRNA:gi|158277|gb|K01581.1|DRORGM23	LN:497
+# @SQ	SN:0|28SrRNA:gi|158278|gb|K01586.1|DRORGM261	LN:114
+# [yshen16@scc-ka3 WT_smRNAseq_PRJNA505691_miRNA]$ 
 
 while ( my $line = <$SAM> ) {    
     chomp $line;
@@ -33,12 +49,21 @@ while ( my $line = <$SAM> ) {
 #	print "$line\n";
 	my @arr = split("\t", $line);
 	my $identifier = $arr[1];
+# $arr[1]="SN:0|28SrRNA:gi|126041079|gb|EF216297.1|"
+# $arr[2]="LN:650"
 #	print "$identifier\n";
 #	my ($SN, $num, $seq_id) = split(":", $identifier);
-	my ($SN,  $seq_id) = split(":", $identifier);
+# $SN="SN" and $seq_id="0|28SrRNA"
 #	print "seq id: $seq_id\n";
+# # Yun - I think seq_id extraction is wrong here
+# #	my ($SN,  $seq_id) = split(":", $identifier);
+
+# Yun - the correct way to do is: 
+	my ($SN, $seq_id) = $identifier=~/(SN):(.*)$/;
+
 #get the length for the sequence
 	my ($LN, $length) =  split(":", $arr[2]);
+# $LN="LN", $length=650
 #	print "length: $length\n";
 	
 	$len_hash->{$seq_id} = $length;

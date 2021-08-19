@@ -10,20 +10,28 @@
 # 8) seq_stat
 # 9) ngs_coverage-nelson
 # 10) ngs_genecentric
-INSTALLATION_PATH=/projectnb/lau-bumc/qichengm/software/mosquitoSmallRNA/bin
-DATABASE_PATH=/projectnb/lau-bumc/qichengm/software/mosquitoSmallRNA/database
+
+
+INSTALLATION_PATH=$bindir
+DATABASE_PATH=$refdir
+
+
 # $DATABASE_PATH/$2_virus is the virus database
 # $DATABASE_PATH/hairpin_$2 is the miRNA database
 # $DATABASE_PATH/ucsc_$2_genome is the genome file
 # $DATABASE_PATH/$2_structurerna.bed is the structure RNA bed file
 # $DATABASE_PATH/repeat_$2 is the repeat database
 # $DATABASE_PATH/$2_refseq.bed is the genome bed file
+
+
 #input argument
 #$1 fastq file
 #$2 organism name, for example fly
 #$3 linker
 #$4 jackpot_cutoff
 #$5 extend_window
+
+
 mismatch0=0
 mismatch1=1
 mismatch2=2
@@ -42,7 +50,10 @@ mv $prefix.cutadapt.fastq.uq  $1.uq
 
 
 total_read=`grep '^>' $1.uq | cut -d':' -f2 | awk '{sum+=$1} END {print sum}' `
-echo "$1	total_read	$total_read" >> summary
+
+
+#katia: summary is used the first time and the old version should be overwritten: change >> to >
+echo "$1	total_read	$total_read" > summary
 
 fastx_clipper -Q33 -a $3 -M 9 -n -l 20 -c -i $1.uq > $1.uq.clipped
 fastx_clipper -Q33 -a $3 -M 9 -n -l 20 -C -i $1.uq > $1.uq.noclipped
@@ -54,7 +65,8 @@ grep -v '[AN][AN][AN][AN][AN][AN][AN][AN][AN][AN][AN][AN][AN]*' | \
 grep -v '[CN][CN][CN][CN][CN][CN][CN][CN][CN][CN][CN][CN][CN]*' | \
 grep -v '[GN][GN][GN][GN][GN][GN][GN][GN][GN][GN][GN][GN][GN]*' | \
 grep -v '[TN][TN][TN][TN][TN][TN][TN][TN][TN][TN][TN][TN][TN]*' | \
-remove_poly_n > $1.uq.noclipped
+
+$INSTALLATION_PATH/remove_poly_n > $1.uq.noclipped
 
 grep    '^>' $1.uq.clipped | cut -d':' -f2 > z0.$1
 grep -v '^>' $1.uq.clipped | paste - z0.$1 | sort +0 -1 +1 -2n | group -g 0 -a 1 -c -d '+' | sed 's/+$//' > z1.$1
@@ -63,7 +75,7 @@ grep -v '[AN][AN][AN][AN][AN][AN][AN][AN][AN][AN][AN][AN][AN]*' | \
 grep -v '[CN][CN][CN][CN][CN][CN][CN][CN][CN][CN][CN][CN][CN]*' | \
 grep -v '[GN][GN][GN][GN][GN][GN][GN][GN][GN][GN][GN][GN][GN]*' | \
 grep -v '[TN][TN][TN][TN][TN][TN][TN][TN][TN][TN][TN][TN][TN]*' | \
-remove_poly_n > $1.uq.clipped
+$INSTALLATION_PATH/remove_poly_n > $1.uq.clipped
 
 read_clipped=`grep '^>' $1.uq.clipped | cut -d':' -f2 | awk '{sum+=$1} END {print sum}' `
 echo "$1	read_clipped	$read_clipped" | sed 's/	$/	0/' >> summary
@@ -137,7 +149,7 @@ echo "$1	genome_mapped (number of mapped reads)	$genome_mapped" >> summary
 
 grep '^@' $1.genome.sam > z0.$1
 grep -v '^@' $1.genome.sam | grep    ':[0-9][0-9]*	4	\*' | cut -f1 | sed 's/^/0	/' > z1.$1
-grep -v '^@' $1.genome.sam | grep -v ':[0-9][0-9]*	4	\*' | cut -f1 | count >> z1.$1
+grep -v '^@' $1.genome.sam | grep -v ':[0-9][0-9]*	4	\*' | cut -f1 | $INSTALLATION_PATH/count >> z1.$1
 touch z22.$1; rm z22.$1
 
 for W in A C G N T
@@ -218,14 +230,20 @@ grep -v '	4	\*	0	0	\*	\*	0	0	' z0.$1 | grep -v '^@' >> $1.rep_vir.sam
 
 grep -v '^@' $1.rep_vir.sam | cut -f1,3 | sort -u | cut -d':' -f2- | sort +1 -2 +0 -12n | group -g 1 -a 0 -c -d '+' | sed 's/+$//' > z0.$1
 cut -f2 z0.$1 | bc -l | paste z0.$1 - | cut -f1,3 | sed 's/^/>/' > rep_vir_count.$1
-lt_create_idx rep_vir_count.$1 -q
+$INSTALLATION_PATH/lt_create_idx rep_vir_count.$1 -q
+
 
 cat $1.genome-v2.sam $1.rep_vir.sam | grep -v '^@' | cut -f1 | cut -d':' -f1-2 | uniq | sort -u > z0.$1
-paste z0.$1 z0.$1 | cut -d':' -f1,2 | sed 's/^/>/' | tr '\t' '\n' | seq_stat | grep -v ': ' > z1.$1
+paste z0.$1 z0.$1 | cut -d':' -f1,2 | sed 's/^/>/' | tr '\t' '\n' | $INSTALLATION_PATH/seq_stat | grep -v ': ' > z1.$1
 
-coverage_mapped_to_genome_rep_vir=`cut -d':' -f2- z1.$1 | sed 's/:[0-9][0-9]*//' | sed 's/^/(/' | sed 's/	/*/' | sed 's/$/)/' | awk '{sum+=$1} END {print sum}' `
-read_count_mapped_to_genome_rep_vir=`cut -f1 z1.$1 | cut -d':' -f2 | awk '{sum+=$1} END {print sum}' `
+coverage_mapped_to_genome_rep_vir=`cut -d':' -f2- z1.$1 | sed 's/:[0-9][0-9]*//' | sed 's/^/(/' | sed 's/	/*/' | sed 's/$/)/' | $INSTALLATION_PATH/sum`
+read_count_mapped_to_genome_rep_vir=`cut -f1 z1.$1 | cut -d':' -f2 | $INSTALLATION_PATH/sum`
 avg_read_length_mapped_to_genome_rep_vir=`echo "$coverage_mapped_to_genome_rep_vir/$read_count_mapped_to_genome_rep_vir" | bc -l`
+
+
+#coverage_mapped_to_genome_rep_vir=`cut -d':' -f2- z1.$1 | sed 's/:[0-9][0-9]*//' | sed 's/^/(/' | sed 's/	/*/' | sed 's/$/)/' | awk '{sum+=$1} END {print sum}' `
+#read_count_mapped_to_genome_rep_vir=`cut -f1 z1.$1 | cut -d':' -f2 | awk '{sum+=$1} END {print sum}' `
+#avg_read_length_mapped_to_genome_rep_vir=`echo "$coverage_mapped_to_genome_rep_vir/$read_count_mapped_to_genome_rep_vir" | bc -l`
 echo "$1	read_count_mapped_to_genome_rep_vir	$read_count_mapped_to_genome_rep_vir" >> summary
 echo "$1	coverage_mapped_to_genome_rep_vir	$coverage_mapped_to_genome_rep_vir" >> summary
 echo "$1	avg_read_length_mapped_to_genome_rep_vir	$avg_read_length_mapped_to_genome_rep_vir" >> summary
@@ -236,7 +254,7 @@ nomorized_count=`echo "$read_clipped + $read_noclipped" | bc -l`
 echo $nomorized_count
 
 echo "ngs_coverage-nelson -i $1.genome-v2-50.sam -o $1.genome-v2-50-coverage-w$plot_window_size-$cutoff -w $plot_window_size -m 4 -a 2 -r $nomorized_count -c $cutoff "
-ngs_coverage-nelson -i $1.genome-v2-50.sam -o $1.genome-v2-50-coverage-w$plot_window_size-$cutoff -w $plot_window_size -m 4 -a 2 -r $nomorized_count -c $cutoff
+$INSTALLATION_PATH/ngs_coverage-nelson -i $1.genome-v2-50.sam -o $1.genome-v2-50-coverage-w$plot_window_size-$cutoff -w $plot_window_size -m 4 -a 2 -r $nomorized_count -c $cutoff
 grep -v '^ERROR' $1.genome-v2-50-coverage-w$plot_window_size-$cutoff > tmp; mv tmp $1.genome-v2-50-coverage-w$plot_window_size-$cutoff
 grep '^#' $1.genome-v2-50-coverage-w$plot_window_size-$cutoff > $1.genome-v2-50-coverage-w$plot_window_size-$cutoff-collapsed.xls
 
@@ -282,8 +300,7 @@ do
   grep "^$i\:" z0.$1 | cut -f2 >> $1-unq-pstv-$plot_window_size-$cutoff.wig
 done
 
- 
 echo " ngs_genecentric -r $DATABASE_PATH/$2_refseq.bed -e $extend_window -v $1.genome-v2-50-coverage-w$plot_window_size-$cutoff -m $1.genome-v2-50.bed -o genecentric_$1-$plot_window_size-$cutoff.xls -n $nomorized_count  "
-ngs_genecentric -r $DATABASE_PATH/$2_refseq.bed -e $extend_window -v $1.genome-v2-50-coverage-w$plot_window_size-$cutoff -m $1.genome-v2-50.bed -o genecentric_$1-$plot_window_size-$cutoff.xls -n $nomorized_count 
+$INSTALLATION_PATH/ngs_genecentric -r $DATABASE_PATH/$2_refseq.bed -e $extend_window -v $1.genome-v2-50-coverage-w$plot_window_size-$cutoff -m $1.genome-v2-50.bed -o genecentric_$1-$plot_window_size-$cutoff.xls -n $nomorized_count 
 perl  $INSTALLATION_PATH/collapse_isoforms.pl genecentric_$1-$plot_window_size-0.02.xls  >  genecentric_$1-$plot_window_size-0.02.collapsed.xls
 exit

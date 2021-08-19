@@ -4,7 +4,7 @@
 ################################
 ## Create .uq .qc .stat file ###
 ################################
-mkdir $1.DIR
+mkdir -p $1.DIR
 cd $1.DIR
 grep -A 1 "^@$head" ../$1 | grep -v '^-' | grep -v "^@$head" > $1.z0
 for W in A C G N T
