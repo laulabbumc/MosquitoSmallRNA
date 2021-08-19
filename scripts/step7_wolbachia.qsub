@@ -1,0 +1,12 @@
+#!/bin/bash -l
+
+#$ -l h_rt=12:00:00
+#$ -P lau-bumc
+#$ -N wolbachia
+#$ -j y
+#$ -l cpu_arch=!bulldozer
+#$ -o logs
+#$ -m ea
+
+export msrg=/projectnb/lau-bumc/katia/MSRG
+bash $msrg/scripts/step7_wolbachia.sh $1

@@ -1,0 +1,12 @@
+#!/bin/bash -l
+
+#$ -l h_rt=24:00:00
+#$ -P lau-bumc
+#$ -N phasing
+#$ -j y
+#$ -l cpu_arch=!bulldozer
+#$ -o logs
+#$ -m ea
+
+export msrg=/projectnb/lau-bumc/katia/MSRG
+bash $msrg/scripts/step8_phasing.sh $1

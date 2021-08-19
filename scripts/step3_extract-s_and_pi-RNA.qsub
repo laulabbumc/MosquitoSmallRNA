@@ -1,0 +1,15 @@
+#!/bin/bash -l
+
+
+#$ -l h_rt=12:00:00
+#$ -P lau-bumc
+#$ -N extract
+#$ -j y
+#$ -l cpu_arch=!bulldozer
+#$ -o logs
+#$ -m ea
+#$ -l scratch_free=50G
+
+export msrg=/projectnb/lau-bumc/katia/MSRG
+
+bash $msrg/scripts/step3_extract-s_and_pi-RNA.sh $1
