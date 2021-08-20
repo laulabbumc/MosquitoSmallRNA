@@ -63,6 +63,8 @@ To run the pipeline, the following scripts need to be executed:
 
 
 ### Step 1
+#### Find genes and intergenic regions with mapping small RNAs
+
 
     $msrg/scripts/step1_gene-centric.qsub $i
 
