@@ -63,7 +63,7 @@ Specify the name of the directory with an input Fastq file as an input to the sc
 Add directories with scripts and 3rd-party tools to the path.
 This can be done by adjusting the following script and then sourcing it:
 
-source $msrge/scripts/msrg-set-env.sh 
+    source $msrge/scripts/msrg-set-env.sh 
 
 
 
