@@ -42,6 +42,7 @@ To run the pipeline, the following scripts need to be executed:
 
 
 Open the above set-up file with a text editor and specify environment variables, for example:
+
     export organism=Aeaeg
     export adapter=TGGAATTCTC
     export cutoff=20000000
@@ -56,11 +57,13 @@ Open the above set-up file with a text editor and specify environment variables,
 Save the file and source it.
 Specify the name of the directory with an input Fastq file as an input to the script. 
 **Important**: The fastq file name should be the same as the directory name!
+
     source msrg-set-input.sh AeAAeg_Aag2_V5eGFP
 
 Add directories with scripts and 3rd-party tools to the path.
 This can be done by adjusting the following script and then sourcing it:
-    source $msrge/scripts/msrg-set-env.sh 
+
+source $msrge/scripts/msrg-set-env.sh 
 
 
 
