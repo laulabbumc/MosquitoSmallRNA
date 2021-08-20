@@ -66,40 +66,40 @@ To run the pipeline, the following scripts need to be executed:
 #### Find genes and intergenic regions with mapping small RNAs
 
 
-    $msrg/scripts/step1_gene-centric.qsub $i
+    $msrg/scripts/step1_gene-centric.sh $i
 
 
 ### Step 2
 
-    $msrg/scripts/step2_miRNA.qsub $i
+    $msrg/scripts/step2_miRNA.sh $i
 
 
 ### Step 3
 
-    $msrg/scripts/step3_extract-s_and_pi-RNA.qsub $i
+    $msrg/scripts/step3_extract-s_and_pi-RNA.sh $i
 
 
 ### Step 4
 
-    $msrg/scripts/step4_transposon.qsub $i
+    $msrg/scripts/step4_transposon.sh $i
 
 
 ### Step 5
 
-    $msrg/scripts/step5_virus.qsub $i
+    $msrg/scripts/step5_virus.sh $i
 
 
 ### Step 6
 
-    $msrg/scripts/step6_srna_structure.qsub $i
+    $msrg/scripts/step6_srna_structure.sh $i
 
 ### Step 7
 
-    $msrg/scripts/step7_wolbachia.qsub $i
+    $msrg/scripts/step7_wolbachia.sh $i
 
 ### Step 8
 
-    $msrg/scripts/step8_phasing.qsub $i
+    $msrg/scripts/step8_phasing.sh $i
 
 
 
