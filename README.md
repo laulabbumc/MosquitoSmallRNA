@@ -68,6 +68,28 @@ To run the pipeline, the following scripts need to be executed:
 
     $msrg/scripts/step1_gene-centric.sh $i
 
+The following reference files are used diring this step
+- Virus genomes
+- miRNA hairpins
+- Animal genome
+- Structural RNAs
+- TE consensus sequences
+- Refseq.bed transcripts
+
+
+This step produces the following output files:
+- cutadapt
+- stats
+- summary
+- clipped
+- novirus
+- sam
+- nostructure
+- v2_50 ( sam and bed)
+- nogenome
+- wig/bigwig
+- coverage
+
 
 ### Step 2
 
