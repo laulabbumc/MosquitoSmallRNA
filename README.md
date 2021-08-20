@@ -17,7 +17,7 @@ THe following software packages are used by the pipeline. We list the version th
 - samtools/1.10
 - blast/2.2.26
 - fastx-toolkit/0.0.14
-- R/4.0.5
+- R/4.1.1
 - bedtobigbed/2.6
 - ucscutils/2018-11-27
  
@@ -27,19 +27,77 @@ THe following software packages are used by the pipeline. We list the version th
 
 ## Usage
 
-PATH=$PATH:$YOUR_OWN_CUSTOM_INSTALLATION_PATH
- 
-This guide explains how to read the outputs in the MSRG database. The outputs are generarted by a series of custom Shell, Perl, C and Python scripts avaiable on this GitHub page.
+To run the pipeline, the following scripts need to be executed:
 
-Example for running the script, gene_centric_test: 
-$ bash /[YOUR_OWN_CUSTOM_INSTALLATION_PATH]/gene-centric.sh AnGam_Fcarc_TN.fastq Angam AGATCGGAAG 20000000 5
+### Set - up environment
 
-Example for running the script, TE_virus_test: 
-$ bash /[YOUR_OWN_CUSTOM_INSTALLATION_PATH]/TE_virus_pipeline.sh AnGam_Fcarc_TN ../gene_centric_test/summary Angam AGATCGGAAG
+    # Set current path (it should contain a directory with an input Fastq file)
+    cd /path/to/current/dir
 
-Example for running the script, phasing_test:
-$ bash /[YOUR_OWN_CUSTOM_INSTALLATION_PATH]/sRNA_Phasing_pipeline.sh AnGam_Fcarc_TN.fastq Angam AGATCGGAAG
+    export msrg=/path/to/MSRG
+    echo "msrg: $msrg"
 
-Example for running the script, piRNA_target_test: 
-$ bash /[YOUR_OWN_CUSTOM_INSTALLATION_PATH]/piRNA_target_pipeline.sh Angam_darkgreen.fa /[YOUR_OWN_CUSTOM_DATABASE_PATH]/Angam_transcript_TE_virus.fa 
+    # Copy a file that is used to set-up environment
+    cp $msrg/scripts/msrg-set-input.sh .
+    # Open this file with a text editor and specify environment variables, i.e
+    ##export organism=Aeaeg
+    ##export adapter=TGGAATTCTC
+    ##export cutoff=20000000
+    ##export window=5
+
+    ###input directory name (corresponding to a line in a sample file)
+    ##export i=$1
+
+    ###location of the reference directory
+    ##export refdir=/path/to/reference
+
+    # Save the file and source it:
+    # Specify the name of the directory with an input Fastq file as an input to the script
+    # Important: The fastq file name should be the same as the directory name!
+    source msrg-set-input.sh AeAAeg_Aag2_V5eGFP
+
+    # Add directories with scripts and 3rd-party tools to the path
+    # This can be done by adjusting the following script and then sourcing it:
+    source $msrge/scripts/msrg-set-env.sh 
+
+
+
+### Step 1
+
+    $msrg/scripts/step1_gene-centric.qsub $i
+
+
+### Step 2
+
+    $msrg/scripts/step2_miRNA.qsub $i
+
+
+### Step 3
+
+    $msrg/scripts/step3_extract-s_and_pi-RNA.qsub $i
+
+
+### Step 4
+
+    $msrg/scripts/step4_transposon.qsub $i
+
+
+### Step 5
+
+    $msrg/scripts/step5_virus.qsub $i
+
+
+### Step 6
+
+    $msrg/scripts/step6_srna_structure.qsub $i
+
+### Step 7
+
+    $msrg/scripts/step7_wolbachia.qsub $i
+
+### Step 8
+
+    $msrg/scripts/step8_phasing.qsub $i
+
+
 
