@@ -8,18 +8,18 @@ The Mosquito Small RNA Genomics (MSRG) resource is a repository of analyses on t
 
 The following software packages are used by the pipeline. We list the version that we used for testing:
 
-- python3/3.8.10
-- cutadapt/3.4
-- bedops/2.4.35
-- perl/5.34.0
-- bedtools/2.27.1
-- bowtie/1.0.0
-- samtools/1.10
-- blast/2.2.26
-- fastx-toolkit/0.0.14
-- R/4.1.1
-- bedtobigbed/2.6
-- ucscutils/2018-11-27
+- [python3/3.8.10](https://www.python.org/downloads/release/python-3810/)
+- [cutadapt/3.4](https://cutadapt.readthedocs.io/en/stable/installation.html)
+- [bedops/2.4.35](https://bedops.readthedocs.io/en/latest/content/installation.html)
+- [perl/5.34.0](https://www.perl.org/get.html)
+- [bedtools/2.27.1](https://bedtools.readthedocs.io/en/latest/content/installation.html)
+- [bowtie/1.0.0](https://sourceforge.net/projects/bowtie-bio/files/bowtie/1.0.0/)
+- [samtools/1.10](http://www.htslib.org/)
+- [blast/2.2.26](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download)
+- [fastx-toolkit/0.0.14](http://hannonlab.cshl.edu/fastx_toolkit/download.html)
+- [R/4.1.1](https://cran.r-project.org/)
+- [bedtobigbed/2.6](https://www.encodeproject.org/software/bedToBigBed/)
+- [ucscutils/2018-11-27](http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/FOOTER)
  
 
 ## Installation
