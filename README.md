@@ -25,7 +25,7 @@ The following software packages are used by the pipeline. We list the version th
 ## Installation
 
 To download the source code for the pipeline, execute:
-
+	git clone https://github.com/laulabbumc/MosquitoSmallRNA.git
 
 
 ## Usage
