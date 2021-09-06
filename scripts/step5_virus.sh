@@ -17,19 +17,23 @@ echo "Reference Dir: $refdir"
 export flag=1 
 echo "Flag: $flag"
 
+# Define step: TE, virus, structural_RNA, wolbachia
+export step="virus"
+echo "Step: $step"
+
 #save current directory
-curdir=$(pwd)
+#curdir=$(pwd)
 
 #prepare reference file
-cd $refdir
-cp $organism\_virus repeat_$organism
+#cd $refdir
+#cp $organism\_virus repeat_$organism
 
-bash update_repbase.sh $organism
-cd $curdir
+#bash update_repbase.sh $organism
+#cd $curdir
 
 # Compute total mapped read count
 kk=`cd $i; bash get_total_mapped_read_count_from_summary.sh ; cd ..` 
-echo "kk: $kk"
+#echo "kk: $kk"
 
 #get to virus directory and clean it
 cd $i\_virus

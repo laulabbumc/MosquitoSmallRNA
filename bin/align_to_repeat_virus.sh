@@ -9,16 +9,15 @@
 echo "Flag=$4"
 
 #katia
-#INSTALLATION_PATH=/projectnb/lau-bumc/gdayama/projects/yamashita_Dmel_github_test/bin
 DATABASE_PATH=$3
 
-# $DATABASE_PATH/repeat_$2  is the repeat database
 plot_window_size=1
 mismatch=2
 #
 # the input file is $1.trim.fastq.uq.polyn
 #
-bowtie -f -v $mismatch -S -k 100000 -m 100000 --strata --best -p 1 $DATABASE_PATH/repeat_$2 $1.trim.fastq.uq.polyn z0.$1
+#echo "Database path before bowtie: $DATABASE_PATH"
+bowtie -f -v $mismatch -S -k 100000 -m 100000 --strata --best -p 1 $DATABASE_PATH/$2\_$step $1.trim.fastq.uq.polyn z0.$1
 grep -v '	4	\*	0	0	\*	\*	0	0	' z0.$1 > $1.rep.sam
 rm z0.$1
 

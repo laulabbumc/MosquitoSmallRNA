@@ -34,13 +34,14 @@ do
 #   echo ${total_read[$i]}
 done
 
-echo "ltx_create_idx processing sequence in ${a[$i]}.trim.fastq.uq.polyn"
-echo "Start: $(date)"
 for (( i=1; i<=$n_sample; i++ ))
 do
    miRNA_samfile[$i]=${@:$(($i+2+$n_sample+$n_sample)):1}
    #echo ${miRNA_samfile[$i]}
 
+
+   echo "ltx_create_idx processing sequence in ${a[$i]}.trim.fastq.uq.polyn"
+   echo "Start: $(date)"
    #katia: redirect output to /dev/null to avoid many messages
    lt_create_idx ${a[$i]}.trim.fastq.uq.polyn > /dev/null
 
@@ -69,7 +70,7 @@ do
 done
 
 
-seq_stat -i $DATABASE_PATH/repeat_$1 | grep -v ': ' > z0
+seq_stat -i $refdir/$1\_$step | grep -v ': ' > z0
 
 
 touch z1;rm z1;touch z1
@@ -86,7 +87,8 @@ do
 done < z0
 chmod +x z1
 
-./z1
+
+./z1 > /dev/null  
 
 
 echo -n 'Transposon	Length' > TE_table.xls
@@ -97,7 +99,7 @@ do
 done
 echo >> TE_table.xls
 
-seq_stat -i $DATABASE_PATH/repeat_$1 | grep -v ': ' > z0
+seq_stat -i $refdir/$1\_$step | grep -v ': ' > z0
 
 
 while read id length
@@ -124,10 +126,12 @@ sort -k 2 -b -n -r  TE_virus_peaks.txt   | cut -f 1 > z1
 sed 's/$/-25-0-1.pdf \\/' z1 >> z0  ## need to modify
 echo >> z0
 chmod +x z0
-./z0
+
+echo "Preparing plots"
+./z0 > /dev/null
 
 mv TE_table.xls TE_virus.xls
-mv TE_virus.pdf TE_virus.pdf
+#mv TE_virus.pdf TE_virus.pdf
 
 exit
 
