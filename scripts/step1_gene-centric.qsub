@@ -10,6 +10,6 @@
 #$ -m ea
 #$ -l scratch_free=50G
 
-export msrg=/projectnb/lau-bumc/katia/MSRG
+export msrg=/projectnb/lau-bumc/katia/MosquitoSmallRNA
 
 bash $msrg/scripts/step1_gene-centric.sh $1

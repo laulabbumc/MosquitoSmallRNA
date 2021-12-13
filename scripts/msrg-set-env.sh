@@ -1,20 +1,29 @@
 #!/bin/bash -l
 
-module load python3/3.8.10
-module load rnastructure/6.3
-module load cutadapt/3.4
-module load bedops/2.4.35
-module load perl/5.34.0
-module load bedtools/2.27.1
-module load bowtie/1.0.0
-module load samtools/1.10
-module load blast/2.2.26
-module load fastx-toolkit/0.0.14
-module load R/4.0.5
-module load bedtobigbed/2.6
-module load ucscutils/2018-11-27
+if [[ -d "/share/module.7/test/" ]]
+then
+  module use /share/module.7/test/
+fi 
 
-export msrg=/projectnb/lau-bumc/katia/MSRG/
+  module load python3/3.8.10.clean
+  module load bedops/2.4.35
+  module load perl/5.34.0
+  module load bedtools/2.27.1
+  module load bowtie/1.0.0
+  module load samtools/1.10
+  module load blast/2.2.26
+  module load fastx-toolkit/0.0.14
+  module load R/4.1.1
+  module load bedtobigbed/2.6
+  module load ucscutils/2018-11-27
+
+
+if [[ ! -z "${msrg}" ]] && [[ -d "/projectnb/lau-bumc/katia/MosquitoSmallRNA/" ]]
+then
+   export msrg=/projectnb/lau-bumc/katia/MosquitoSmallRNA/
+else
+   export msrg=/msrg/
+fi
 
 # workdir should be the directory where sample file is located
 export workdir=$(pwd)

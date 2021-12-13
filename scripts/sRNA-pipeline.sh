@@ -15,7 +15,7 @@ fi
 # create a logs directory for job output files
 mkdir -p logs
 
-export msrg=/projectnb/lau-bumc/katia/MSRG
+export msrg=/projectnb/lau-bumc/katia/MosquitoSmallRNA/
 
 echo "msrg: $msrg"
 

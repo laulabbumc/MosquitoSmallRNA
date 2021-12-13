@@ -8,6 +8,6 @@
 #$ -o logs
 #$ -m ea
 
-export msrg=/projectnb/lau-bumc/katia/MSRG
+export msrg=/projectnb/lau-bumc/katia/MosquitoSmallRNA
 
 bash $msrg/scripts/step4_transposon.sh $1
