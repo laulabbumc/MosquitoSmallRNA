@@ -120,8 +120,7 @@ Removing low complexity counts, extracting 18-23nt long small RNA reads, and ext
 
     $msrg/scripts/step4_transposon.sh $i
 
-
-
+Mapping the reads to a database built from a multi-fasta file of transposon consensus sequences. Generates a TSV/XLS file of the sense and antisense small RNA mapping counts with up to 2 nt mismatch binned by 18-23nt and 24-35nt bins. Generates a matching PDF file that are an R-script based graphical plot of the small RNA read coverage across each transposon entry. Entries are then sorted according to a ratio calculation of number of read peaks / distance between peaks to rank highest the entries with the broadest coverage of mapping reads across the transposon entry. 
 
 
 ### Step 5
