@@ -115,33 +115,34 @@ Trimmed reads between 18-23nt length are extracted and mapped to miRNA hairpin s
 
 Removing low complexity counts, extracting 18-23nt long small RNA reads, and extracting 24-35nt long piRNA reads.
 
-
 ### Step 4
 
     $msrg/scripts/step4_transposon.sh $i
 
 Mapping the reads to a database built from a multi-fasta file of transposon consensus sequences. Generates a TSV/XLS file of the sense and antisense small RNA mapping counts with up to 2 nt mismatch binned by 18-23nt and 24-35nt bins. Generates a matching PDF file that are an R-script based graphical plot of the small RNA read coverage across each transposon entry. Entries are then sorted according to a ratio calculation of number of read peaks / distance between peaks to rank highest the entries with the broadest coverage of mapping reads across the transposon entry. 
 
-
 ### Step 5
 
     $msrg/scripts/step5_virus.sh $i
 
+Similar to Step 4 but using a list of virus genome sequences in the database to generate these outputs.  The virus sequences database is from a manually curated list.
 
 ### Step 6
 
     $msrg/scripts/step6_srna_structure.sh $i
+    
+Similar to Step 4 but using a list of structural RNA sequences in the database to generate these outputs. Structural RNAs would be ribosomal and transfer RNAs, snoRNAs and snRNAs. This structural RNA sequences database is from a manually curated list.
 
 ### Step 7
 
     $msrg/scripts/step7_wolbachia.sh $i
+   
+Similar to Step 4 but using a list of Wolbachia bacteria genome sequences in the database to generate these outputs.  The Wolbachia sequences database is from a manually curated list.
 
 ### Step 8
 
     $msrg/scripts/step8_phasing.sh $i
 
-
-The counts and length distributions generated during various steps such as Gene-centric and miRNA analysis are saved during each of the steps (Fig. 1). These scripts now send final results files generated in steps above to a consolidated results folder for sharing or posting.
-In addition, the wigToBigWig script is used to convert the fixed step WIG file to the Bigwig file which can be visualized on the Broad Institute Integrative Genomics Viewer together with the genome assembly and GTF files. 
+The counts and length distributions generated during various steps such as Gene-centric and miRNA analysis are saved during each of the steps (Fig. 1). These scripts now send final results files generated in steps above to a consolidated results folder for sharing or posting. In addition, the wigToBigWig script is used to convert the fixed step WIG file to the Bigwig file which can be visualized on the Broad Institute Integrative Genomics Viewer together with the genome assembly and GTF files.  Finally, there are scripts implimenting a phasing alorithm derived from Gainetdinov et al (Zamore) Mol Cell 2018: DOI: 10.1016/j.molcel.2018.08.007 to measure the piRNA biogenesis phasing patterns in mosquito piRNA and siRNA datasets.
 
 
