@@ -76,9 +76,9 @@ bash $bindir/sort_bed.sh $i.fastq.genome-v2-50.bed $i.fastq.genome-v2-50.sorted.
 
 bedToBigBed $i.fastq.genome-v2-50.sorted.bed $refdir/$organism\_chrome_size.txt $i.fastq.genome-v2-50.sorted.bb
 
-grep -v 'RPM' $i.fastq.genome-v2-50-coverage-w25-0.02-collapsed.xls | awk -F'        ' '{ if ($12>5) print $2}' | sed -e 's/:/-/' |  awk -F'-' '{if ($2>1) {print $1"\t"$2-1"\t"$3} else {print $1"\t0\t"$3 } }' |  intersectBed -v -a -  -b $refdir/$organism\_refseq.ucsc.bed > intergenic.$i.fastq.genome-v2-50-coverage-w25-0.02-collapsed.bed ; 
+grep -v 'RPM' $i.fastq.genome-v2-50-coverage-w25-0.02-collapsed.xls | awk -F'\t' '{ if ($12>5) print $2}' | sed -e 's/:/-/' |  awk -F'-' '{if ($2>1) {print $1"\t"$2-1"\t"$3} else {print $1"\t0\t"$3 } }' |  intersectBed -v -a -  -b $refdir/$organism\_refseq.ucsc.bed > intergenic.$i.fastq.genome-v2-50-coverage-w25-0.02-collapsed.bed ; 
 
-cat intergenic.$i.fastq.genome-v2-50-coverage-w25-0.02-collapsed.bed | awk -F'       ' '{ print $1":"$2+1"-"$3}' | fgrep -f - $i.fastq.genome-v2-50-coverage-w25-0.02-collapsed.xls > intergenic.$i.fastq.genome-v2-50-coverage-w25-0.02-collapsed.xls 
+cat intergenic.$i.fastq.genome-v2-50-coverage-w25-0.02-collapsed.bed | awk -F'\t' '{ print $1":"$2+1"-"$3}' | fgrep -f - $i.fastq.genome-v2-50-coverage-w25-0.02-collapsed.xls > intergenic.$i.fastq.genome-v2-50-coverage-w25-0.02-collapsed.xls 
 
 grep 'RPM' $i.fastq.genome-v2-50-coverage-w25-0.02-collapsed.xls  | head -n 1 > tmp; 
 cat  intergenic.$i.fastq.genome-v2-50-coverage-w25-0.02-collapsed.xls  >> tmp; 
