@@ -20,7 +20,7 @@ DATABASE_PATH=$refdir
 # $DATABASE_PATH/hairpin_$2 is the miRNA database
 # $DATABASE_PATH/ucsc_$2_genome is the genome file
 # $DATABASE_PATH/$2_structurerna.bed is the structure RNA bed file
-# $DATABASE_PATH/repeat_$2 is the repeat database
+# $DATABASE_PATH/$2_TE is the repeat database
 # $DATABASE_PATH/$2_refseq.bed is the genome bed file
 
 
@@ -223,9 +223,9 @@ read_noclipped=`grep "^$1	read_noclipped	" summary | tail -1 | cut -f3`
 nomorized_count=$genome_mapped
 echo "$1	nomorized_count (number of mapped reads after applying threshold for high count )	$nomorized_count" >> summary
 
-bowtie -f -v $mismatch1 -S -k 100000 -m 100000 --strata --best -p 1 $DATABASE_PATH/repeat_$2 $1.uq.clipped z0.$1
+bowtie -f -v $mismatch1 -S -k 100000 -m 100000 --strata --best -p 1 $DATABASE_PATH/$2_TE $1.uq.clipped z0.$1
 grep -v '	4	\*	0	0	\*	\*	0	0	' z0.$1 > $1.rep_vir.sam
-bowtie -f -v $mismatch2 -S -k 100000 -m 100000 --strata --best -p 1 $DATABASE_PATH/repeat_$2 $1.uq.noclipped z0.$1
+bowtie -f -v $mismatch2 -S -k 100000 -m 100000 --strata --best -p 1 $DATABASE_PATH/$2_TE $1.uq.noclipped z0.$1
 grep -v '	4	\*	0	0	\*	\*	0	0	' z0.$1 | grep -v '^@' >> $1.rep_vir.sam
 
 grep -v '^@' $1.rep_vir.sam | cut -f1,3 | sort -u | cut -d':' -f2- | sort +1 -2 +0 -12n | group -g 1 -a 0 -c -d '+' | sed 's/+$//' > z0.$1
