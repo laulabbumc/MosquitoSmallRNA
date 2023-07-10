@@ -1,4 +1,4 @@
-#!/bin/bash -l
+#!/bin/bash
 
 source $msrg/scripts/msrg-set-env.sh
 source msrg-set-input.sh $1

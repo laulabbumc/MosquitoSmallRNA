@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # require the following program in $PATH
 # 1) cutadapt
 # 2) fastx_clipper

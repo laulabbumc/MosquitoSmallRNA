@@ -3,6 +3,8 @@
 DATABASE_PATH=$refdir
 
 blastall -p blastn -i $1.uq -d $DATABASE_PATH/hairpin_$2 -o $1.hairpin.blast -F none -e 0.01 -a 10 -b 100 -v 100 -z 10000000
+
+echo "Running blast_to_sam with input $1\n"
 blast_to_sam -i $1.hairpin.blast -o z0.$1 -b
 cp z0.$1 $1.hairpin.sam
 
