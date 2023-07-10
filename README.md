@@ -145,4 +145,24 @@ Similar to Step 4 but using a list of Wolbachia bacteria genome sequences in the
 
 The counts and length distributions generated during various steps such as Gene-centric and miRNA analysis are saved during each of the steps (Fig. 1). These scripts now send final results files generated in steps above to a consolidated results folder for sharing or posting. In addition, the wigToBigWig script is used to convert the fixed step WIG file to the Bigwig file which can be visualized on the Broad Institute Integrative Genomics Viewer together with the genome assembly and GTF files.  Finally, there are scripts implimenting a phasing alorithm derived from Gainetdinov et al (Zamore) Mol Cell 2018: DOI: 10.1016/j.molcel.2018.08.007 to measure the piRNA biogenesis phasing patterns in mosquito piRNA and siRNA datasets.
 
+## Running Pipeline using singularity container
 
+The container can be downloaded from the laulab server: `https://laulab.bu.edu/msrg/container/msrg.simg`
+
+To run various steps using container, export the location of the container and then execute each script sequentially:
+```
+export IMAGE=/projectnb/lau-bumc/katia/MosquitoSmallRNA/container/msrg.simg
+singularity exec -e --bind /project --bind /projectnb --env msrg=/msrg $IMAGE /msrg/scripts/step1_gene-centric.sh $1
+```
+
+### Running container on the SCC
+
+Copy the following script to your current directory:: `/projectnb/lau-bumc/katia/MosquitoSmallRNA/container/scripts/sRNA-pipeline_container.sh`
+and execute it at a command prompt giving the name of the input directory as an argument, i.e:
+
+```
+./sRNA-pipeline_container.sh AnGam_Fcarc_JR
+
+```
+
+Make sure you have `msrg-set-input.sh` file in your current directory and it contains correct configurations.
