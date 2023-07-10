@@ -157,7 +157,9 @@ singularity exec -e --bind /project --bind /projectnb --env msrg=/msrg $IMAGE /m
 
 ### Running container on the SCC
 
-Copy the following script to your current directory:: `/projectnb/lau-bumc/katia/MosquitoSmallRNA/container/scripts/sRNA-pipeline_container.sh`
+Make sure you have `msrg-set-input.sh` file in your current directory and it contains correct configurations.
+
+Copy the following script to your current directory: `/projectnb/lau-bumc/katia/MosquitoSmallRNA/container/scripts/sRNA-pipeline_container.sh`
 and execute it at a command prompt giving the name of the input directory as an argument, i.e:
 
 ```
@@ -165,4 +167,3 @@ and execute it at a command prompt giving the name of the input directory as an 
 
 ```
 
-Make sure you have `msrg-set-input.sh` file in your current directory and it contains correct configurations.
